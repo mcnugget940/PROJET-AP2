@@ -1,4 +1,4 @@
-rom fltk import *
+from fltk import *
 import math
 
 # ============================================================
