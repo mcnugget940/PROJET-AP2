@@ -1,15 +1,13 @@
-from fltk import *
-import math
+import fltk
+import random
+import json
 
-# ============================================================
-#  CONSTANTES
-# ============================================================
-
+# constantes 
 LARGEUR  = 20          # largeur du personnage en pixels
 HAUTEUR  = 20          # hauteur du personnage en pixels
-VMAX     = 15          # vitesse maximale autorisée
-GRAVITE  = (0, 0.5)    # gravité (axe y vers le bas avec fltk)
-PAS      = 0.5         # pas de la simulation (finesse)
+VMAX     = 15          # vitesse maximale autorisée (la limite de vitesse que le joueur peut donner au perso)
+GRAVITE  = (0, 9,8)    # gravité qui tire le mouton
+PAS      = 0.5         # pas de la simulation 
 
 # Dimensions de la fenêtre de jeu
 FENETRE_LARGEUR  = 800
@@ -20,23 +18,12 @@ FENETRE_HAUTEUR  = 600
 # ============================================================
 
 def charger_niveau(nom_fichier):
-    """
-    Lit un fichier texte décrivant un niveau et renvoie :
-      - le dictionnaire personnage
-      - le tuple objectif  ((x1,y1),(x2,y2))
-      - la liste lst_blocs [ ((x1,y1),(x2,y2)), ... ]
-
-    Format du fichier :
-      ligne 1 : x,y                   -> position du personnage
-      ligne 2 : x1,y1,x2,y2           -> objectif
-      lignes suivantes : x1,y1,x2,y2  -> un bloc par ligne
-    Les commentaires (# ...) sont ignorés.
-    """
+    
     personnage = None
     objectif   = None
     lst_blocs  = []
 
-    with open(nom_fichier, "r") as f:
+    with open(nom_fichier, "r") as f:  # on ouvre le fichier sous format lecture
         lignes = f.readlines()
 
     for i, ligne in enumerate(lignes):
@@ -64,3 +51,4 @@ def charger_niveau(nom_fichier):
             lst_blocs.append(((x1, y1), (x2, y2)))
 
     return personnage, objectif, lst_blocs
+
